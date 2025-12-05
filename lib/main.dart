@@ -13,6 +13,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) 
   {
     return MaterialApp(
+      //Desabilita banner debug
+      debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
   }
@@ -20,10 +22,17 @@ class MyApp extends StatelessWidget {
 
 //atalho stless
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+   HomePage({super.key});
 
-  void incremento () { print('incremento');}
-   void decremento () { print('decremento');}
+  int contador = 0;
+
+  void incremento () { 
+    contador ++;
+    print('incremento');}
+
+   void decremento () { 
+    contador --;
+    print('decremento');}
 
 
   @override
@@ -31,7 +40,9 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage('assets/img/monsterHigh.jpg')),
+          image: DecorationImage(
+            image: AssetImage('assets/img/monsterHigh.jpg'),
+            fit: BoxFit.cover,),
         ),
         child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -43,12 +54,14 @@ class HomePage extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          Text('0',
+         Padding(padding: EdgeInsets.all(40),
+         child:  Text(contador.toString(),
              style: TextStyle(
               fontSize: 26.0,
-              color: const Color.fromARGB(255, 235, 143, 205),
+              color: Color.fromARGB(255, 235, 143, 205),
               fontWeight: FontWeight.w700,
             ),
+          ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
