@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) 
   {
     return MaterialApp(
-      //Desabilita banner debug
       debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
@@ -21,18 +20,37 @@ class MyApp extends StatelessWidget {
 }
 
 //atalho stless
-class HomePage extends StatelessWidget {
-   HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
-  int contador = 0;
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
 
-  void incremento () { 
-    contador ++;
-    print('incremento');}
+class _HomePageState extends State<HomePage> {
 
-   void decremento () { 
-    contador --;
-    print('decremento');}
+   int contador = 0;
+
+  void incremento ()
+   { 
+    setState(() {
+      contador++;
+    });
+    print('incremento');
+    }
+   
+   void decremento () 
+   {
+    setState(() {
+      contador--;
+    });
+     print('contador');
+     }
+
+   bool get isEmpty => contador == 0;
+   bool get isFull => contador == 10;
+
+
 
 
   @override
@@ -40,51 +58,61 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/img/monsterHigh.jpg'),
-            fit: BoxFit.cover,),
+          image: DecorationImage(image: AssetImage('assets/images/monsterHigh.jpg'),),
         ),
         child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Pode Entrar',
+          Text(
+            isFull ? 'Lotado' : 'Pode Entrar!',
             style: TextStyle(
               fontSize: 26.0,
-              color: const Color.fromARGB(255, 255, 185, 255),
+              color: isFull ? Colors.red : Color.fromARGB(255, 0, 0, 0),
               fontWeight: FontWeight.w700,
             ),
           ),
-         Padding(padding: EdgeInsets.all(40),
-         child:  Text(contador.toString(),
+
+          Padding(padding: EdgeInsets.all(40),
+          child: Text(
+             contador.toString(),
              style: TextStyle(
-              fontSize: 26.0,
-              color: Color.fromARGB(255, 235, 143, 205),
+              fontSize: 55,
+              color: isFull ? Colors.red : Color.fromARGB(255, 0, 0, 0),
               fontWeight: FontWeight.w700,
             ),
+          ), 
           ),
-          ),
+         
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-                TextButton(onPressed:decremento,
+                TextButton(
+                  onPressed: isEmpty ? null : decremento,
                   style:  TextButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 243, 33, 121),
+                    backgroundColor: isEmpty ? Color.fromARGB(255, 72, 40, 187).withOpacity(0.2) : Color.fromARGB(255, 72, 40, 187),
                     fixedSize: const Size(100,100),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
-                  child: Text('Sair',
+
+
+                  child: Text('Saiu',
                     style:TextStyle(
                       color:Colors.black,
                       fontSize: 16,
+                     
                     )
                   ),
                 ),
-                 
-              TextButton(onPressed: incremento,
+                 SizedBox(width: 32),
+                  
+              TextButton(
+                onPressed: isFull ? null : incremento,
+
                 style:  TextButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 212, 33, 243),
+                    backgroundColor: isFull ? const Color.fromARGB(255, 72, 40, 187).withOpacity(0.2) : const Color.fromARGB(255, 72, 40, 187),
                     fixedSize: const Size(100,100),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
@@ -97,14 +125,14 @@ class HomePage extends StatelessWidget {
                   )
                 ),
               ),
-
             ],
-
           )
         ],
       ),
       )
     );
   }
+
 }
+
 
