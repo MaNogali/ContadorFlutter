@@ -1,3 +1,2 @@
-# contador
-
-A new Flutter project.
+# Contador
+<p><b>Dupla:</b> Marina Nogali e Rafael Segui</p>
